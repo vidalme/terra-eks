@@ -1,21 +1,29 @@
-# resource "aws_subnet" "eks_vpc_private-1a" {
-#   vpc_id     = aws_vpc.eks_vpc.id
-#   cidr_block = "10.0.3.0/24"
+resource "aws_subnet" "eks_subnet_private_1a" {
+  vpc_id            = aws_vpc.eks_vpc.id
+  cidr_block        = cidrsubnet(var.cidr_block, 8, 3)
+  availability_zone = "${data.aws_region.current.name}a"
 
-#   availability_zone = "us-east-1a"
+  tags = merge(
+    local.tags,
+    {
+      Name                              = "${var.project_name}-priv-subnet-1a",
+      "kubernetes.io/role/internal-elb" = 1
+    }
+  )
+}
 
-#   tags = {
-#     Name = "eks_vpc_private-1a"
-#   }
-# }
+resource "aws_subnet" "eks_subnet_private_1b" {
+  vpc_id     = aws_vpc.eks_vpc.id
+  cidr_block = cidrsubnet(var.cidr_block, 8, 4)
 
-# resource "aws_subnet" "eks_vpc_private-1b" {
-#   vpc_id     = aws_vpc.eks_vpc.id
-#   cidr_block = "10.0.4.0/24"
+  availability_zone = "${data.aws_region.current.name}b"
+  # map_public_ip_on_launch = true
 
-#   availability_zone = "us-east-1b"
-
-#   tags = {
-#     Name = "eks_vpc_private-1b"
-#   }
-# }
+  tags = merge(
+    local.tags,
+    {
+      Name                              = "${var.project_name}-priv-subnet-1b",
+      "kubernetes.io/role/internal-elb" = 1
+    }
+  )
+}
