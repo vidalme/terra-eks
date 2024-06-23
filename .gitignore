@@ -10,6 +10,8 @@ comunidadedevops
 *.tfstate
 *.tfstate.*
 
+*.tfvars
+
 # Crash log files
 crash.log
 crash.*.log
