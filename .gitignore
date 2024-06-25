@@ -1,6 +1,7 @@
 # folder com o venv para usar o pre-commit
 comunidadedevops
 
+
 # Local .terraform directories
 **/.terraform/*
 .terraform
